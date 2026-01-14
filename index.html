@@ -56,7 +56,7 @@
     <div class="flex flex-1 w-full relative overflow-hidden">
         
         <!-- Sidebar Navigation -->
-        <aside id="sidebar" class="bg-white w-64 shadow-2xl transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed inset-y-0 left-0 md:relative md:inset-auto z-50 flex flex-col border-r border-gray-200 h-full">
+        <aside id="sidebar" class="bg-white w-72 shadow-2xl transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed inset-y-0 left-0 md:relative md:inset-auto z-50 flex flex-col border-r border-gray-200 h-full">
             <div class="p-4 h-16 border-b border-gray-100 bg-indigo-50 flex justify-between items-center flex-none">
                 <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Menu</p>
                 <button id="menu-close-btn" class="md:hidden text-gray-500 hover:text-indigo-600 focus:outline-none p-2">
@@ -220,17 +220,16 @@
                 title: "平日（月〜金）の鉄則",
                 desc: "糖質制限＋高タンパクが必須。13kg落とすためのベース作り。",
                 rules: [
-                    { icon: "fa-bread-slice", text: "糖質（米・パン・麺）は朝と昼のみ「拳1個分(約100g)」。夜は主食抜き（豆腐に置換）。" },
-                    { icon: "fa-drumstick-bite", text: "タンパク質は毎食必ず「手のひら1枚分」の肉・魚・卵・大豆製品を食べる。" },
+                    { icon: "fa-bread-slice", text: "糖質は朝と昼のみ「拳1個分(約100g)」。夜は主食抜き（豆腐に置換）。" },
+                    { icon: "fa-drumstick-bite", text: "タンパク質は毎食必ず「手のひら1枚分」の肉・魚・卵・大豆製品を食べる。原則むね肉等の動物性タンパク質を優先。" },
                     { icon: "fa-tint", text: "飲み物は水かお茶のみ（目標1日2リットル）。" }
                 ]
             },
             weekend: {
                 title: "休日（土・日）のルール",
-                desc: "リフレッシュ期間。ただし暴飲暴食は避ける。",
+                desc: "",
                 rules: [
-                    { icon: "fa-utensils", text: "2食連続でドカ食いしないこと。" },
-                    { icon: "fa-bed", text: "身体を休めるか、軽い散歩程度でOK。" }
+                    { icon: "fa-utensils", text: "2食連続でドカ食いしないこと。" }
                 ]
             }
         };
