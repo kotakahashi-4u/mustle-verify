@@ -149,6 +149,41 @@
 
     <!-- JavaScript Logic -->
     <script>
+        // --- Screen Wake Lock System (Prevent Sleep) ---
+        let wakeLock = null;
+
+        async function requestWakeLock() {
+            if ('wakeLock' in navigator) {
+                try {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    console.log('Screen Wake Lock active');
+                    
+                    // Re-acquire lock if visibility changes (e.g. user switches tabs and comes back)
+                    wakeLock.addEventListener('release', () => {
+                        console.log('Screen Wake Lock released');
+                    });
+                } catch (err) {
+                    console.error('Wake Lock error:', err.name, err.message);
+                }
+            }
+        }
+
+        async function releaseWakeLock() {
+            if (wakeLock !== null) {
+                await wakeLock.release();
+                wakeLock = null;
+                console.log('Screen Wake Lock manually released');
+            }
+        }
+
+        // Handle visibility change to re-acquire lock if app was backgrounded during workout
+        document.addEventListener('visibilitychange', async () => {
+            if (wakeLock === null && document.visibilityState === 'visible' && !document.getElementById('workout-overlay').classList.contains('hidden')) {
+                // If workout is active (overlay visible) but lock is lost, try to get it back
+                await requestWakeLock();
+            }
+        });
+
         // --- BGM System (SoundHelix Only with Loop) ---
         class BGMSystem {
             constructor() {
@@ -589,6 +624,9 @@
             const dayMenu = phase.days[dayKey].menu;
             currentPhaseBPM = phase.bpm || 120;
             
+            // Activate Wake Lock
+            requestWakeLock();
+
             // Build Queue
             activeWorkoutQueue = [];
             
@@ -633,6 +671,7 @@
             if(confirm("トレーニングを終了しますか？")) {
                 clearInterval(timerInterval);
                 bgm.stop();
+                releaseWakeLock(); // Release lock on manual close
                 document.getElementById('workout-overlay').classList.add('hidden');
             }
         }
@@ -734,6 +773,7 @@
                 mainBtn.innerHTML = 'CLOSE';
                 mainBtn.onclick = () => { 
                     bgm.stop();
+                    releaseWakeLock(); // Release lock on completion
                     document.getElementById('workout-overlay').classList.add('hidden'); 
                 };
             }
